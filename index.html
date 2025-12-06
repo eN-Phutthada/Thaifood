@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thai Food Heritage Journey</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="parallax-container" id="parallax-bg">
+        <div class="ingredient" data-speed="0.2"
+            style="top: 10%; right: 10%; width: 100px; height: 100px; background: orange; border-radius: 50%; filter: blur(40px);">
+        </div>
+        <div class="ingredient" data-speed="0.5"
+            style="top: 40%; left: 5%; width: 80px; height: 80px; background: limegreen; border-radius: 50%; filter: blur(30px);">
+        </div>
+        <div class="ingredient" data-speed="0.1"
+            style="bottom: 20%; right: 20%; width: 150px; height: 150px; background: red; border-radius: 50%; filter: blur(50px);">
+        </div>
+
+    </div>
+
+    <div class="texture-overlay"></div>
+
+    <header>
+        <div class="header-content">
+            <i data-lucide="chef-hat"
+                style="color: var(--gold-color); width: 48px; height: 48px; margin-bottom: 1rem;"></i>
+            <h1 class="main-title">The Taste</h1>
+            <p class="subtitle">Journey of The Authentic Thai Cuisine</p>
+        </div>
+        <div class="scroll-indicator">
+            <span>SCROLL TO DISCOVER</span>
+            <div class="scroll-line"></div>
+        </div>
+    </header>
+
+    <div class="timeline-container">
+        <div class="golden-line"></div>
+
+        <div class="card">
+            <div class="card-image-wrapper">
+                <span class="flag-badge">🇹🇭</span>
+                <img src="https://placehold.co/600x400/2a1b12/cfa166?text=Thai+Food" alt="Thai Food" class="card-image">
+            </div>
+            <div class="card-content">
+                <div class="year-text">1350</div>
+                <div class="location-tag">
+                    <i data-lucide="map-pin" style="width: 16px;"></i> Thailand (Origin)
+                </div>
+                <h2 class="card-title">จุดเริ่มต้นความอร่อย</h2>
+                <p class="card-desc">รากเหง้าแห่งรสชาติ ต้มยำกุ้งและแกงมัสมั่น
+                    ความลงตัวของสมุนไพรและกะทิที่สืบทอดมารุ่นสู่รุ่น จากครัวเรือนสู่สำรับชาววัง</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-image-wrapper">
+                <span class="flag-badge">🇯🇵</span>
+                <img src="https://placehold.co/600x400/2a1b12/cfa166?text=Japanese+Influence" alt="Japan"
+                    class="card-image">
+            </div>
+            <div class="card-content">
+                <div class="year-text">1600</div>
+                <div class="location-tag">
+                    <i data-lucide="map-pin" style="width: 16px;"></i> Japan
+                </div>
+                <h2 class="card-title">ความประณีตแห่งตะวันออก</h2>
+                <p class="card-desc">อิทธิพลการแล่เนื้อปลาและความสดใหม่ ผสานกับการจัดวางที่งดงามแบบ 'วะโชกุ'
+                    ทำให้เกิดการแลกเปลี่ยนวัฒนธรรมอาหาร</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-image-wrapper">
+                <span class="flag-badge">🇨🇳</span>
+                <img src="https://placehold.co/600x400/2a1b12/cfa166?text=Chinese+Wok" alt="China" class="card-image">
+            </div>
+            <div class="card-content">
+                <div class="year-text">1760</div>
+                <div class="location-tag">
+                    <i data-lucide="map-pin" style="width: 16px;"></i> China
+                </div>
+                <h2 class="card-title">เปลวไฟแห่งมังกร</h2>
+                <p class="card-desc">เทคนิคการใช้ไฟแรง (Wok Hei) การผัด และเส้นก๋วยเตี๋ยว
+                    ที่กลายมาเป็นหัวใจสำคัญของสตรีทฟู้ดไทยในปัจจุบัน</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-image-wrapper">
+                <span class="flag-badge">🇫🇷</span>
+                <img src="https://placehold.co/600x400/2a1b12/cfa166?text=French+Cuisine" alt="France"
+                    class="card-image">
+            </div>
+            <div class="card-content">
+                <div class="year-text">2000</div>
+                <div class="location-tag">
+                    <i data-lucide="map-pin" style="width: 16px;"></i> France
+                </div>
+                <h2 class="card-title">ศิลปะแห่งตะวันตก</h2>
+                <p class="card-desc">การยกระดับอาหารไทยสู่ Fine Dining ด้วยเทคนิคการทำซอสและการจัดจานแบบฝรั่งเศส
+                    สร้างมูลค่าให้วัตถุดิบไทย</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <h3>THAI FOOD HERITAGE</h3>
+        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.6;">© 2025 DESIGNED WITH PASSION</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
