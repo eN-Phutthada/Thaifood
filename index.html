@@ -13,7 +13,7 @@
         :root {
             --bg-color: #1a1008;
             --gold-color: #ffdb58;
-            --card-bg: rgba(20, 10, 5, 0.90);
+            --card-bg: rgba(20, 10, 5, 0.95);
             --text-color: #f3e5ab;
         }
 
@@ -108,7 +108,6 @@
             transform: translate(-50%, -100%) scale(0);
             z-index: 4;
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
-            transition: transform 0.3s ease;
         }
 
         .loc-th {
@@ -147,11 +146,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
-            opacity: 0.3;
+            background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+            opacity: 0.15;
             pointer-events: none;
             z-index: 10;
-            mix-blend-mode: overlay;
         }
 
         .vignette-overlay {
@@ -160,8 +158,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* background: radial-gradient(circle, transparent 40%, #000 100%); */
-            opacity: 0.8;
+            background: radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.8) 100%);
             pointer-events: none;
             z-index: 11;
         }
@@ -172,127 +169,202 @@
         }
 
         .section {
-            min-height: 120vh;
+            min-height: 110vh;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
             padding: 0 5%;
             position: relative;
+            justify-content: flex-start;
         }
 
-        #sec-fr,
-        #sec-us {
+        .section-end {
+            min-height: 110vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
             justify-content: flex-end;
         }
 
+        #sec-intro,
         #sec-outro {
-            min-height: 100vh;
             justify-content: center;
             text-align: center;
-            flex-direction: column;
+            min-height: 100vh;
         }
 
         .content-card {
-            background: var(--card-bg);
-            padding: 3rem;
-            width: 45vw;
-            max-width: 800px;
-            border-left: 4px solid var(--gold-color);
-            box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.9);
+            background: rgba(30, 25, 20, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            width: 50vw;
+            max-width: 900px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            padding: 0;
+            overflow: hidden;
             transform: translateY(50px);
             opacity: 0;
-            backdrop-filter: blur(8px);
-            margin-left: 2%;
+            display: flex;
+            flex-direction: column;
         }
 
-        #sec-fr .content-card,
-        #sec-us .content-card {
-            margin-left: 0;
-            margin-right: 2%;
-            border-left: none;
-            border-right: 4px solid var(--gold-color);
+        .card-header {
+            background: linear-gradient(90deg, rgba(238, 187, 77, 0.1) 0%, transparent 100%);
+            padding: 2rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(238, 187, 77, 0.2);
+            position: relative;
         }
 
-        .content-card h2 {
+        .header-text h2 {
+            font-size: 2.5rem;
             color: var(--gold-color);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid #555;
-            padding-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 0.5rem;
         }
 
-        .quote-text {
+        .header-text .sub-title {
             font-family: 'Prompt', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fff;
+            opacity: 0.9;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .flag-badge {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid var(--gold-color);
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(238, 187, 77, 0.4);
+            flex-shrink: 0;
+            background: #000;
+        }
+
+        .flag-badge img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 2.5rem;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2rem;
+        }
+
+        .story-content .quote {
+            font-size: 1.4rem;
+            font-style: italic;
             color: #fff;
             margin-bottom: 1.5rem;
             line-height: 1.6;
+            border-left: 3px solid var(--accent-red);
+            padding-left: 15px;
         }
 
-        .desc-text {
+        .story-content .desc {
             font-size: 1rem;
-            color: #ddd;
-            margin-bottom: 1.5rem;
+            color: #dcdcdc;
             line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
         }
 
-        .img-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+        .food-gallery {
+            display: flex;
+            flex-direction: column;
             gap: 15px;
+            position: relative;
         }
 
-        .img-grid img {
+        .food-card {
+            background: #fff;
+            padding: 6px 6px 25px 6px;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease, z-index 0.3s;
+            cursor: pointer;
+            width: 80%;
+            align-self: center;
+        }
+
+        .food-card:nth-child(2) {
+            transform: rotate(3deg) translate(10px, -20px);
+        }
+
+        .food-card:hover {
+            transform: scale(1.05) rotate(0deg);
+            z-index: 10;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .food-card img {
             width: 100%;
-            height: 200px;
+            height: 140px;
             object-fit: cover;
-            border: 1px solid #8b5e3c;
-            filter: sepia(0.2);
-            transition: filter 0.3s;
+            filter: saturate(1.2);
         }
 
-        .img-grid img:hover {
-            filter: sepia(0);
-        }
-
-        .section.intro {
-            min-height: 100vh;
-            justify-content: center;
+        .food-card span {
+            display: block;
             text-align: center;
+            color: #333;
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            font-weight: 600;
         }
 
-        @media (max-width: 768px) {
-            .section {
-                justify-content: center;
-                padding: 20px;
-                min-height: 100vh;
-            }
+        .card-footer {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-            #sec-fr,
-            #sec-us {
-                justify-content: center;
-            }
+        .landmark-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 10s linear;
+        }
 
-            .content-card {
-                width: 100%;
-                max-width: 100%;
-                margin-left: 0;
-                margin-right: 0;
-                transform: translateY(50px);
-                padding: 2rem;
-            }
+        .content-card:hover .landmark-bg {
+            transform: scale(1.1);
+        }
 
-            #sec-fr .content-card,
-            #sec-us .content-card {
-                margin-right: 0;
-                border-left: 4px solid var(--gold-color);
-                border-right: none;
-            }
+        .landmark-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            padding: 20px 2.5rem;
+            color: #fff;
+        }
 
-            .img-grid img {
-                height: 120px;
-            }
+        .landmark-title {
+            color: var(--gold-color);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .landmark-text {
+            font-size: 0.9rem;
+            font-weight: 300;
+            opacity: 0.9;
         }
     </style>
 </head>
@@ -302,7 +374,6 @@
         <div class="map-inner" id="map-click-target">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/2000px-World_map_-_low_resolution.svg.png"
                 alt="World Map" class="world-map-bg">
-
             <svg class="map-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
                 <path id="path-jp" class="route-path" d="M772,282 Q820,200 868,201" />
                 <path id="path-cn" class="route-path" d="M772,282 Q785,220 797,186" />
@@ -310,7 +381,6 @@
                 <path id="path-fr" class="route-path" d="M772,282 Q620,150 482,180" />
                 <path id="path-us" class="route-path" d="M772,282 Q500,50 269,198" />
             </svg>
-
             <div class="marker loc-th"></div>
             <div class="flag-icon loc-jp" id="flag-jp" data-flag="🇯🇵">🇯🇵</div>
             <div class="flag-icon loc-cn" id="flag-cn" data-flag="🇨🇳">🇨🇳</div>
@@ -324,86 +394,240 @@
     <div class="vignette-overlay"></div>
 
     <div class="scroll-container">
-        <section class="section intro" id="sec-intro">
-            <div style="z-index: 20;">
-                <h1 style="font-size: 5rem; color: var(--gold-color); line-height: 1.1;">THAI TASTE<br>ODYSSEY</h1>
-                <p style="font-size: 1.5rem; margin-top: 20px;">การเดินทางของรสชาติไทยสู่สากล</p>
-                <p style="margin-top:20px; font-size: 0.9rem; opacity: 0.7;">(Scroll Down to Explore)</p>
+        <section class="section" id="sec-intro">
+            <div>
+                <h1
+                    style="font-size: clamp(3rem, 8vw, 6rem); color: var(--gold-color); line-height: 1; text-shadow: 0 0 20px rgba(238, 187, 77, 0.5);">
+                    THAI TASTE<br>ODYSSEY</h1>
+                <div style="width: 100px; height: 2px; background: var(--gold-color); margin: 20px auto;"></div>
+                <p style="font-size: 1.5rem; font-weight: 300;">การเดินทางของรสชาติไทยสู่สากล</p>
+                <p style="margin-top: 30px; font-size: 0.8rem; letter-spacing: 2px; opacity: 0.6;">SCROLL TO BEGIN
+                    JOURNEY</p>
             </div>
         </section>
 
         <section class="section" id="sec-jp">
             <div class="content-card">
-                <h2 class="thai-header">"รสไทยในดินแดนอูมามิ" 🇯🇵</h2>
-                <p class="quote-text">“ญี่ปุ่น...หนึ่งในประเทศที่หลงใหลอาหารไทยมากที่สุด”</p>
-                <div class="img-grid">
-                    <img src="https://images.unsplash.com/photo-1548661710-7f540c9c56d6?auto=format&fit=crop&q=80&w=400"
-                        alt="Tom Yum">
-                    <img src="https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&q=80&w=400"
-                        alt="Pad Thai">
+                <div class="card-header">
+                    <div class="header-text">
+                        <div class="sub-title">Japan</div>
+                        <h2 class="thai-header">รสไทยในแดนอูมามิ</h2>
+                    </div>
+                    <div class="flag-badge">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg" alt="Japan">
+                    </div>
                 </div>
-                <p class="desc-text" style="margin-top: 20px;">
-                    ร้านอาหารไทยกว่า 1,000 แห่ง กระจายอยู่ทั่วโตเกียว ขณะที่คนญี่ปุ่นเริ่มทำ "ผัดไทย" และ "ต้มยำกุ้ง"
-                    กินเองที่บ้าน ผสมผสานรสชาติความจัดจ้านเข้ากับความละมุนละไมแบบญี่ปุ่น
-                </p>
+                <div class="card-body">
+                    <div class="story-content">
+                        <p class="quote">“ญี่ปุ่น...หนึ่งในประเทศที่หลงใหลอาหารไทยมากที่สุดในเอเชีย”</p>
+                        <p class="desc">คนญี่ปุ่นชื่นชมความซับซ้อนของรสชาติไทย
+                            ความเผ็ดร้อนที่ตัดกับความกลมกล่อมกลายเป็นเสน่ห์ที่หาไม่ได้ในอาหารท้องถิ่น
+                            เมนูไทยจึงไม่ใช่แค่อาหารต่างชาติ แต่เป็นรสชาติที่คุ้นเคยในชีวิตประจำวัน</p>
+                    </div>
+                    <div class="food-gallery">
+                        <div class="food-card">
+                            <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&q=80&w=300"
+                                alt="Gaprao">
+                            <span>ข้าวกะเพรา (Gaprao)</span>
+                        </div>
+                        <div class="food-card">
+                            <img src="https://images.unsplash.com/photo-1606850780554-b55eaac846e0?auto=format&fit=crop&q=80&w=300"
+                                alt="Khao Man Gai">
+                            <span>ข้าวมันไก่ (Khao Man Gai)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&q=80&w=800"
+                        alt="Tokyo" class="landmark-bg">
+                    <div class="landmark-overlay">
+                        <div class="landmark-title">Tokyo & Beyond</div>
+                        <div class="landmark-text">ร้านอาหารไทยกว่า 1,000 แห่งกระจายอยู่ทั่วโตเกียว
+                            ขณะที่คนญี่ปุ่นเริ่มทำ “ผัดไทย” และ “ต้มยำกุ้ง” กินเองที่บ้าน
+                            ผสานรสชาติจัดจ้านเข้ากับความละมุนละไมแบบญี่ปุ่น</div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="section" id="sec-cn">
             <div class="content-card">
-                <h2 class="thai-header">China 🇨🇳</h2>
-                <p class="quote-text">รากเหง้าแห่งการผัดและเส้นสาย</p>
-                <div class="img-grid" style="grid-template-columns: 1fr;">
-                    <img src="https://placehold.co/600x300/2a1b12/cfa166?text=Chinese+Influence" alt="China">
+                <div class="card-header">
+                    <div class="header-text">
+                        <div class="sub-title">China</div>
+                        <h2 class="thai-header">คืนสู่รากเหง้า</h2>
+                    </div>
+                    <div class="flag-badge">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg"
+                            alt="China">
+                    </div>
                 </div>
-                <p class="desc-text" style="margin-top: 15px;">อิทธิพลของกระทะเหล็ก (Wok) และเส้นก๋วยเตี๋ยว
-                    ที่ถูกปรับเปลี่ยนให้เป็นรสชาติแบบไทย การเดินทางย้อนกลับสู่ต้นกำเนิดพร้อมรสชาติที่เปลี่ยนไปตามกาลเวลา
-                </p>
+                <div class="card-body">
+                    <div class="story-content">
+                        <p class="quote">“จากต้นกำเนิดวิถีแห่งการผัด...สู่รสชาติใหม่ที่จัดจ้านกว่าเดิม”</p>
+                        <p class="desc">อิทธิพลของกระทะเหล็ก (Wok) และเส้นก๋วยเตี๋ยว
+                            ถูกส่งกลับไปยังแผ่นดินใหญ่ในรูปแบบใหม่ รสชาติไทยที่เน้นเครื่องเทศและสมุนไพรสด
+                            กลายเป็นที่นิยมอย่างมากในกลุ่มวัยรุ่นจีน</p>
+                    </div>
+                    <div class="food-gallery">
+                        <div class="food-card">
+                            <img src="https://images.unsplash.com/photo-1548943487-a2e4e43b485c?auto=format&fit=crop&q=80&w=300"
+                                alt="Tom Yum">
+                            <span>ต้มยำหม้อไฟ</span>
+                        </div>
+                        <div class="food-card">
+                            <img src="https://images.unsplash.com/photo-1563245372-f21720e32c4d?auto=format&fit=crop&q=80&w=300"
+                                alt="Curry Crab">
+                            <span>ปูผัดผงกะหรี่</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <img src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&q=80&w=800"
+                        alt="China" class="landmark-bg">
+                    <div class="landmark-overlay">
+                        <div class="landmark-title">Modern Chinese Cuisine</div>
+                        <div class="landmark-text">การเดินทางย้อนกลับสู่ต้นกำเนิดพร้อมรสชาติที่เปลี่ยนไปตามกาลเวลา
+                            เมนูต้มยำหม้อไฟกลายเป็นเทรนด์ฮิตที่มอบประสบการณ์ความเผ็ดร้อนแบบใหม่</div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="section" id="sec-au">
             <div class="content-card">
-                <h2 class="thai-header">Australia 🇦🇺</h2>
-                <p class="quote-text">ซิดนีย์...เมืองหลวงที่สองของอาหารไทย</p>
-                <div class="img-grid" style="grid-template-columns: 1fr;">
-                    <img src="https://placehold.co/600x300/2a1b12/cfa166?text=Thai+Town+Sydney" alt="Australia">
+                <div class="card-header">
+                    <div class="header-text">
+                        <div class="sub-title">Australia</div>
+                        <h2 class="thai-header">บ้านหลังที่สอง</h2>
+                    </div>
+                    <div class="flag-badge">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Australia.svg"
+                            alt="Australia">
+                    </div>
                 </div>
-                <p class="desc-text" style="margin-top: 15px;">Thai Town ในซิดนีย์เป็นเครื่องยืนยันความนิยม
-                    อาหารไทยเป็นเหมือน Comfort Food ของชาวออสซี่ ที่หารับประทานได้ง่ายพอๆ กับแซนด์วิชหรือเบอร์เกอร์
-                </p>
+                <div class="card-body">
+                    <div class="story-content">
+                        <p class="quote">“ซิดนีย์...เมืองหลวงอย่างไม่เป็นทางการของอาหารไทยนอกประเทศ”</p>
+                        <p class="desc">ด้วยจำนวนประชากรไทยที่หนาแน่นและความเปิดกว้างของชาวออสซี่
+                            อาหารไทยที่นี่จึงมีรสชาติที่ "แท้จริง" (Authentic) ที่สุดแห่งหนึ่งในโลก</p>
+                    </div>
+                    <div class="food-gallery">
+                        <div class="food-card">
+                            <img src="https://images.unsplash.com/photo-1548940740-204726a19be3?auto=format&fit=crop&q=80&w=300"
+                                alt="Massaman">
+                            <span>แกงมัสมั่น</span>
+                        </div>
+                        <div class="food-card">
+                            <img src="https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&q=80&w=300"
+                                alt="Pad See Ew">
+                            <span>ผัดซีอิ๊ว</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <img src="https://images.unsplash.com/photo-1524293581917-878a6d017c71?auto=format&fit=crop&q=80&w=800"
+                        alt="Sydney" class="landmark-bg">
+                    <div class="landmark-overlay">
+                        <div class="landmark-title">Thai Town, Sydney</div>
+                        <div class="landmark-text">อาหารไทยเป็นเหมือน Comfort Food ของชาวออสซี่ ที่หารับประทานได้ง่ายพอๆ
+                            กับแซนด์วิช Thai Town ในซิดนีย์คือเครื่องยืนยันความสำเร็จนี้</div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section class="section" id="sec-fr">
+        <section class="section-end" id="sec-fr">
             <div class="content-card">
-                <h2 class="thai-header">France 🇫🇷</h2>
-                <p class="quote-text">ความประณีตระดับ Fine Dining</p>
-                <div class="img-grid" style="grid-template-columns: 1fr;">
-                    <img src="https://placehold.co/600x300/2a1b12/cfa166?text=Fine+Dining" alt="France">
+                <div class="card-header">
+                    <div class="header-text">
+                        <div class="sub-title">France</div>
+                        <h2 class="thai-header">ความประณีตระดับโลก</h2>
+                    </div>
+                    <div class="flag-badge">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg" alt="France">
+                    </div>
                 </div>
-                <p class="desc-text" style="margin-top: 15px;">เมื่อรสจัดจ้านของไทย ผสานกับเทคนิคชั้นสูงของฝรั่งเศส
-                    เกิดเป็นนวัตกรรมอาหารรูปแบบใหม่ ที่ยกระดับสมุนไพรไทยสู่เวทีโลกในรูปแบบที่หรูหรา</p>
+                <div class="card-body">
+                    <div class="story-content">
+                        <p class="quote">“เมื่อสมุนไพรไทยผสานเข้ากับศิลปะการครัวชั้นสูง (Fine Dining)”</p>
+                        <p class="desc">ในดินแดนแห่ง Gastronomy อาหารไทยถูกยกระดับด้วยการจัดจานและเทคนิคแบบฝรั่งเศส
+                            สร้างมูลค่าและประสบการณ์ใหม่ให้กับชาวตะวันตก</p>
+                    </div>
+                    <div class="food-gallery">
+                        <div class="food-card">
+                            <img src="https://images.unsplash.com/photo-1626804475297-411dbe631e8b?auto=format&fit=crop&q=80&w=300"
+                                alt="Mee Krob">
+                            <span>หมี่กรอบชาววัง</span>
+                        </div>
+                        <div class="food-card">
+                            <img src="https://images.unsplash.com/photo-1623592864197-2856c4d7e817?auto=format&fit=crop&q=80&w=300"
+                                alt="Duck Curry">
+                            <span>แกงเผ็ดเป็ดย่าง</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <img src="https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&q=80&w=800"
+                        alt="Paris" class="landmark-bg">
+                    <div class="landmark-overlay">
+                        <div class="landmark-title">Parisian Style</div>
+                        <div class="landmark-text">เมื่อรสจัดจ้านของไทย ผสานกับเทคนิคชั้นสูงของฝรั่งเศส
+                            เกิดเป็นนวัตกรรมอาหารรูปแบบใหม่ ที่ยกระดับสมุนไพรไทยสู่เวทีโลกในรูปแบบที่หรูหรา</div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section class="section" id="sec-us">
+        <section class="section-end" id="sec-us">
             <div class="content-card">
-                <h2 class="thai-header">USA 🇺🇸</h2>
-                <p class="quote-text">Gastrodiplomacy: การทูตผ่านจานอาหาร</p>
-                <div class="img-grid" style="grid-template-columns: 1fr;">
-                    <img src="https://placehold.co/600x300/2a1b12/cfa166?text=Pad+Thai+Diplomacy" alt="USA">
+                <div class="card-header">
+                    <div class="header-text">
+                        <div class="sub-title">USA</div>
+                        <h2 class="thai-header">การทูตผ่านจานอาหาร</h2>
+                    </div>
+                    <div class="flag-badge">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg"
+                            alt="USA">
+                    </div>
                 </div>
-                <p class="desc-text" style="margin-top: 15px;">
-                    โครงการส่งเสริมร้านอาหารไทยทำให้ผัดไทยและแกงเขียวหวานกลายเป็นเมนูยอดฮิตในอเมริกา
-                    เป็นตัวอย่างความสำเร็จของการใช้อาหารเป็นสื่อกลางทางวัฒนธรรม</p>
+                <div class="card-body">
+                    <div class="story-content">
+                        <p class="quote">“Gastrodiplomacy: สหรัฐอเมริกา...เวทีแจ้งเกิดของ 'ผัดไทย' สู่สายตาโลก”</p>
+                        <p class="desc">ความสำเร็จของร้านอาหารไทยในอเมริกาไม่ได้เกิดขึ้นโดยบังเอิญ
+                            แต่เกิดจากการผลักดันและคุณภาพของรสชาติที่ถูกปากชาวตะวันตกอย่างจัง</p>
+                    </div>
+                    <div class="food-gallery">
+                        <div class="food-card">
+                            <img src="https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&q=80&w=300"
+                                alt="Pad Thai">
+                            <span>ผัดไทย (Pad Thai)</span>
+                        </div>
+                        <div class="food-card">
+                            <img src="https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&q=80&w=300"
+                                alt="Tom Kha">
+                            <span>ต้มข่าไก่</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <img src="https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?auto=format&fit=crop&q=80&w=800"
+                        alt="NYC" class="landmark-bg">
+                    <div class="landmark-overlay">
+                        <div class="landmark-title">Coast to Coast</div>
+                        <div class="landmark-text">
+                            โครงการส่งเสริมร้านอาหารไทยทำให้ผัดไทยและแกงเขียวหวานกลายเป็นเมนูยอดฮิตในอเมริกา
+                            เป็นตัวอย่างความสำเร็จของการใช้อาหารเป็นสื่อกลางทางวัฒนธรรม</div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="section" id="sec-outro">
-            <div style="z-index: 20;">
+            <div>
                 <h2 style="font-size: 3rem; color: var(--gold-color);">The Journey Continues</h2>
-                <p class="thai-header" style="font-size: 1.25rem; margin-top: 20px;">
+                <div style="width: 50px; height: 2px; background: #fff; margin: 20px auto; opacity: 0.5;"></div>
+                <p class="thai-header" style="font-size: 1.25rem;">
                     อาหารไทย...เดินทางไปไกลทั่วโลก<br>แต่หัวใจยังคงอยู่ที่เดิม</p>
             </div>
         </section>
@@ -419,11 +643,11 @@
 
         const locations = {
             intro: { scale: 1.5, x: 55, y: 45 },
-            jp: { scale: 2.2, x: 78.1, y: 33.5 },
-            cn: { scale: 2.2, x: 75.7, y: 31.0 },
-            au: { scale: 2.2, x: 82.7, y: 71.0 },
-            fr: { scale: 2.2, x: 55.2, y: 30.0 },
-            us: { scale: 2.2, x: 29.9, y: 33.0 },
+            jp: { scale: 2.2, x: 70.1, y: 33.5 },
+            cn: { scale: 2.2, x: 65.7, y: 31.0 },
+            au: { scale: 2.2, x: 75.7, y: 71.0 },
+            fr: { scale: 2.2, x: 60.2, y: 30.0 },
+            us: { scale: 2.2, x: 35.9, y: 33.0 },
 
             overview: { scale: 1.5, x: 55, y: 45 },
         };
@@ -478,7 +702,7 @@
 
             ScrollTrigger.create({
                 trigger: targetId,
-                start: "center center",
+                start: "top center",
                 end: "bottom center",
                 onEnter: () => {
                     if (flagId) {
