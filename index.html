@@ -4,125 +4,557 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thai Food Heritage Journey</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Thai Cuisine Journey</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;700&family=Prompt:wght@300;400;600&display=swap"
         rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        :root {
+            --bg-color: #1a1008;
+            --gold-color: #ffdb58;
+            --card-bg: rgba(20, 10, 5, 0.90);
+            --text-color: #f3e5ab;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Sarabun', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .thai-header {
+            font-family: 'Prompt', sans-serif;
+        }
+
+        .map-fixed-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+            background: #ffce80;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .map-inner {
+            width: 100%;
+            max-width: 1600px;
+            aspect-ratio: 16 / 9;
+            position: relative;
+            transform-origin: center center;
+            will-change: transform;
+        }
+
+        .world-map-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            filter: sepia(1) saturate(5) brightness(0.25) contrast(1.2);
+            opacity: 0.8;
+        }
+
+        .map-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .route-path {
+            fill: none;
+            stroke: var(--gold-color);
+            stroke-width: 2px;
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 5px rgba(255, 219, 88, 0.8));
+        }
+
+        .marker {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: red;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px red;
+            z-index: 3;
+        }
+
+        .flag-icon {
+            position: absolute;
+            font-size: 2rem;
+            transform: translate(-50%, -100%) scale(0);
+            z-index: 4;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+            transition: transform 0.3s ease;
+        }
+
+        .loc-th {
+            left: 77.2%;
+            top: 47.0%;
+        }
+
+        .loc-jp {
+            left: 86.8%;
+            top: 33.5%;
+        }
+
+        .loc-cn {
+            left: 79.7%;
+            top: 31.0%;
+        }
+
+        .loc-au {
+            left: 90.7%;
+            top: 71.0%;
+        }
+
+        .loc-fr {
+            left: 48.2%;
+            top: 30.0%;
+        }
+
+        .loc-us {
+            left: 26.9%;
+            top: 33.0%;
+        }
+
+        .texture-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 10;
+            mix-blend-mode: overlay;
+        }
+
+        .vignette-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* background: radial-gradient(circle, transparent 40%, #000 100%); */
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 11;
+        }
+
+        .scroll-container {
+            position: relative;
+            z-index: 20;
+        }
+
+        .section {
+            min-height: 120vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 5%;
+            position: relative;
+        }
+
+        #sec-fr,
+        #sec-us {
+            justify-content: flex-end;
+        }
+
+        #sec-outro {
+            min-height: 100vh;
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            padding: 3rem;
+            width: 45vw;
+            max-width: 800px;
+            border-left: 4px solid var(--gold-color);
+            box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.9);
+            transform: translateY(50px);
+            opacity: 0;
+            backdrop-filter: blur(8px);
+            margin-left: 2%;
+        }
+
+        #sec-fr .content-card,
+        #sec-us .content-card {
+            margin-left: 0;
+            margin-right: 2%;
+            border-left: none;
+            border-right: 4px solid var(--gold-color);
+        }
+
+        .content-card h2 {
+            color: var(--gold-color);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #555;
+            padding-bottom: 15px;
+        }
+
+        .quote-text {
+            font-family: 'Prompt', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .desc-text {
+            font-size: 1rem;
+            color: #ddd;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .img-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .img-grid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border: 1px solid #8b5e3c;
+            filter: sepia(0.2);
+            transition: filter 0.3s;
+        }
+
+        .img-grid img:hover {
+            filter: sepia(0);
+        }
+
+        .section.intro {
+            min-height: 100vh;
+            justify-content: center;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                justify-content: center;
+                padding: 20px;
+                min-height: 100vh;
+            }
+
+            #sec-fr,
+            #sec-us {
+                justify-content: center;
+            }
+
+            .content-card {
+                width: 100%;
+                max-width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+                transform: translateY(50px);
+                padding: 2rem;
+            }
+
+            #sec-fr .content-card,
+            #sec-us .content-card {
+                margin-right: 0;
+                border-left: 4px solid var(--gold-color);
+                border-right: none;
+            }
+
+            .img-grid img {
+                height: 120px;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <div class="map-fixed-container">
+        <div class="map-inner" id="map-click-target">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/2000px-World_map_-_low_resolution.svg.png"
+                alt="World Map" class="world-map-bg">
 
-    <div class="parallax-container" id="parallax-bg">
-        <div class="ingredient" data-speed="0.2"
-            style="top: 10%; right: 10%; width: 100px; height: 100px; background: orange; border-radius: 50%; filter: blur(40px);">
-        </div>
-        <div class="ingredient" data-speed="0.5"
-            style="top: 40%; left: 5%; width: 80px; height: 80px; background: limegreen; border-radius: 50%; filter: blur(30px);">
-        </div>
-        <div class="ingredient" data-speed="0.1"
-            style="bottom: 20%; right: 20%; width: 150px; height: 150px; background: red; border-radius: 50%; filter: blur(50px);">
-        </div>
+            <svg class="map-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
+                <path id="path-jp" class="route-path" d="M772,282 Q820,200 868,201" />
+                <path id="path-cn" class="route-path" d="M772,282 Q785,220 797,186" />
+                <path id="path-au" class="route-path" d="M772,282 Q840,380 907,426" />
+                <path id="path-fr" class="route-path" d="M772,282 Q620,150 482,180" />
+                <path id="path-us" class="route-path" d="M772,282 Q500,50 269,198" />
+            </svg>
 
+            <div class="marker loc-th"></div>
+            <div class="flag-icon loc-jp" id="flag-jp" data-flag="🇯🇵">🇯🇵</div>
+            <div class="flag-icon loc-cn" id="flag-cn" data-flag="🇨🇳">🇨🇳</div>
+            <div class="flag-icon loc-au" id="flag-au" data-flag="🇦🇺">🇦🇺</div>
+            <div class="flag-icon loc-fr" id="flag-fr" data-flag="🇫🇷">🇫🇷</div>
+            <div class="flag-icon loc-us" id="flag-us" data-flag="🇺🇸">🇺🇸</div>
+        </div>
     </div>
 
     <div class="texture-overlay"></div>
+    <div class="vignette-overlay"></div>
 
-    <header>
-        <div class="header-content">
-            <i data-lucide="chef-hat"
-                style="color: var(--gold-color); width: 48px; height: 48px; margin-bottom: 1rem;"></i>
-            <h1 class="main-title">The Taste</h1>
-            <p class="subtitle">Journey of The Authentic Thai Cuisine</p>
-        </div>
-        <div class="scroll-indicator">
-            <span>SCROLL TO DISCOVER</span>
-            <div class="scroll-line"></div>
-        </div>
-    </header>
-
-    <div class="timeline-container">
-        <div class="golden-line"></div>
-
-        <div class="card">
-            <div class="card-image-wrapper">
-                <span class="flag-badge">🇹🇭</span>
-                <img src="https://placehold.co/600x400/2a1b12/cfa166?text=Thai+Food" alt="Thai Food" class="card-image">
+    <div class="scroll-container">
+        <section class="section intro" id="sec-intro">
+            <div style="z-index: 20;">
+                <h1 style="font-size: 5rem; color: var(--gold-color); line-height: 1.1;">THAI TASTE<br>ODYSSEY</h1>
+                <p style="font-size: 1.5rem; margin-top: 20px;">การเดินทางของรสชาติไทยสู่สากล</p>
+                <p style="margin-top:20px; font-size: 0.9rem; opacity: 0.7;">(Scroll Down to Explore)</p>
             </div>
-            <div class="card-content">
-                <div class="year-text">1350</div>
-                <div class="location-tag">
-                    <i data-lucide="map-pin" style="width: 16px;"></i> Thailand (Origin)
+        </section>
+
+        <section class="section" id="sec-jp">
+            <div class="content-card">
+                <h2 class="thai-header">"รสไทยในดินแดนอูมามิ" 🇯🇵</h2>
+                <p class="quote-text">“ญี่ปุ่น...หนึ่งในประเทศที่หลงใหลอาหารไทยมากที่สุด”</p>
+                <div class="img-grid">
+                    <img src="https://images.unsplash.com/photo-1548661710-7f540c9c56d6?auto=format&fit=crop&q=80&w=400"
+                        alt="Tom Yum">
+                    <img src="https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&q=80&w=400"
+                        alt="Pad Thai">
                 </div>
-                <h2 class="card-title">จุดเริ่มต้นความอร่อย</h2>
-                <p class="card-desc">รากเหง้าแห่งรสชาติ ต้มยำกุ้งและแกงมัสมั่น
-                    ความลงตัวของสมุนไพรและกะทิที่สืบทอดมารุ่นสู่รุ่น จากครัวเรือนสู่สำรับชาววัง</p>
+                <p class="desc-text" style="margin-top: 20px;">
+                    ร้านอาหารไทยกว่า 1,000 แห่ง กระจายอยู่ทั่วโตเกียว ขณะที่คนญี่ปุ่นเริ่มทำ "ผัดไทย" และ "ต้มยำกุ้ง"
+                    กินเองที่บ้าน ผสมผสานรสชาติความจัดจ้านเข้ากับความละมุนละไมแบบญี่ปุ่น
+                </p>
             </div>
-        </div>
+        </section>
 
-        <div class="card">
-            <div class="card-image-wrapper">
-                <span class="flag-badge">🇯🇵</span>
-                <img src="https://placehold.co/600x400/2a1b12/cfa166?text=Japanese+Influence" alt="Japan"
-                    class="card-image">
-            </div>
-            <div class="card-content">
-                <div class="year-text">1600</div>
-                <div class="location-tag">
-                    <i data-lucide="map-pin" style="width: 16px;"></i> Japan
+        <section class="section" id="sec-cn">
+            <div class="content-card">
+                <h2 class="thai-header">China 🇨🇳</h2>
+                <p class="quote-text">รากเหง้าแห่งการผัดและเส้นสาย</p>
+                <div class="img-grid" style="grid-template-columns: 1fr;">
+                    <img src="https://placehold.co/600x300/2a1b12/cfa166?text=Chinese+Influence" alt="China">
                 </div>
-                <h2 class="card-title">ความประณีตแห่งตะวันออก</h2>
-                <p class="card-desc">อิทธิพลการแล่เนื้อปลาและความสดใหม่ ผสานกับการจัดวางที่งดงามแบบ 'วะโชกุ'
-                    ทำให้เกิดการแลกเปลี่ยนวัฒนธรรมอาหาร</p>
+                <p class="desc-text" style="margin-top: 15px;">อิทธิพลของกระทะเหล็ก (Wok) และเส้นก๋วยเตี๋ยว
+                    ที่ถูกปรับเปลี่ยนให้เป็นรสชาติแบบไทย การเดินทางย้อนกลับสู่ต้นกำเนิดพร้อมรสชาติที่เปลี่ยนไปตามกาลเวลา
+                </p>
             </div>
-        </div>
+        </section>
 
-        <div class="card">
-            <div class="card-image-wrapper">
-                <span class="flag-badge">🇨🇳</span>
-                <img src="https://placehold.co/600x400/2a1b12/cfa166?text=Chinese+Wok" alt="China" class="card-image">
-            </div>
-            <div class="card-content">
-                <div class="year-text">1760</div>
-                <div class="location-tag">
-                    <i data-lucide="map-pin" style="width: 16px;"></i> China
+        <section class="section" id="sec-au">
+            <div class="content-card">
+                <h2 class="thai-header">Australia 🇦🇺</h2>
+                <p class="quote-text">ซิดนีย์...เมืองหลวงที่สองของอาหารไทย</p>
+                <div class="img-grid" style="grid-template-columns: 1fr;">
+                    <img src="https://placehold.co/600x300/2a1b12/cfa166?text=Thai+Town+Sydney" alt="Australia">
                 </div>
-                <h2 class="card-title">เปลวไฟแห่งมังกร</h2>
-                <p class="card-desc">เทคนิคการใช้ไฟแรง (Wok Hei) การผัด และเส้นก๋วยเตี๋ยว
-                    ที่กลายมาเป็นหัวใจสำคัญของสตรีทฟู้ดไทยในปัจจุบัน</p>
+                <p class="desc-text" style="margin-top: 15px;">Thai Town ในซิดนีย์เป็นเครื่องยืนยันความนิยม
+                    อาหารไทยเป็นเหมือน Comfort Food ของชาวออสซี่ ที่หารับประทานได้ง่ายพอๆ กับแซนด์วิชหรือเบอร์เกอร์
+                </p>
             </div>
-        </div>
+        </section>
 
-        <div class="card">
-            <div class="card-image-wrapper">
-                <span class="flag-badge">🇫🇷</span>
-                <img src="https://placehold.co/600x400/2a1b12/cfa166?text=French+Cuisine" alt="France"
-                    class="card-image">
-            </div>
-            <div class="card-content">
-                <div class="year-text">2000</div>
-                <div class="location-tag">
-                    <i data-lucide="map-pin" style="width: 16px;"></i> France
+        <section class="section" id="sec-fr">
+            <div class="content-card">
+                <h2 class="thai-header">France 🇫🇷</h2>
+                <p class="quote-text">ความประณีตระดับ Fine Dining</p>
+                <div class="img-grid" style="grid-template-columns: 1fr;">
+                    <img src="https://placehold.co/600x300/2a1b12/cfa166?text=Fine+Dining" alt="France">
                 </div>
-                <h2 class="card-title">ศิลปะแห่งตะวันตก</h2>
-                <p class="card-desc">การยกระดับอาหารไทยสู่ Fine Dining ด้วยเทคนิคการทำซอสและการจัดจานแบบฝรั่งเศส
-                    สร้างมูลค่าให้วัตถุดิบไทย</p>
+                <p class="desc-text" style="margin-top: 15px;">เมื่อรสจัดจ้านของไทย ผสานกับเทคนิคชั้นสูงของฝรั่งเศส
+                    เกิดเป็นนวัตกรรมอาหารรูปแบบใหม่ ที่ยกระดับสมุนไพรไทยสู่เวทีโลกในรูปแบบที่หรูหรา</p>
             </div>
-        </div>
+        </section>
 
+        <section class="section" id="sec-us">
+            <div class="content-card">
+                <h2 class="thai-header">USA 🇺🇸</h2>
+                <p class="quote-text">Gastrodiplomacy: การทูตผ่านจานอาหาร</p>
+                <div class="img-grid" style="grid-template-columns: 1fr;">
+                    <img src="https://placehold.co/600x300/2a1b12/cfa166?text=Pad+Thai+Diplomacy" alt="USA">
+                </div>
+                <p class="desc-text" style="margin-top: 15px;">
+                    โครงการส่งเสริมร้านอาหารไทยทำให้ผัดไทยและแกงเขียวหวานกลายเป็นเมนูยอดฮิตในอเมริกา
+                    เป็นตัวอย่างความสำเร็จของการใช้อาหารเป็นสื่อกลางทางวัฒนธรรม</p>
+            </div>
+        </section>
+
+        <section class="section" id="sec-outro">
+            <div style="z-index: 20;">
+                <h2 style="font-size: 3rem; color: var(--gold-color);">The Journey Continues</h2>
+                <p class="thai-header" style="font-size: 1.25rem; margin-top: 20px;">
+                    อาหารไทย...เดินทางไปไกลทั่วโลก<br>แต่หัวใจยังคงอยู่ที่เดิม</p>
+            </div>
+        </section>
+
+        <div style="height: 10vh;"></div>
     </div>
-
-    <footer>
-        <h3>THAI FOOD HERITAGE</h3>
-        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.6;">© 2025 DESIGNED WITH PASSION</p>
-    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="script.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const locations = {
+            intro: { scale: 1.5, x: 55, y: 45 },
+            jp: { scale: 2.2, x: 78.1, y: 33.5 },
+            cn: { scale: 2.2, x: 75.7, y: 31.0 },
+            au: { scale: 2.2, x: 82.7, y: 71.0 },
+            fr: { scale: 2.2, x: 55.2, y: 30.0 },
+            us: { scale: 2.2, x: 29.9, y: 33.0 },
+
+            overview: { scale: 1.5, x: 55, y: 45 },
+        };
+
+        function calculateTransform(loc) {
+            return {
+                scale: loc.scale,
+                xPercent: (50 - loc.x) * loc.scale,
+                yPercent: (50 - loc.y) * loc.scale
+            };
+        }
+
+        const initialPos = calculateTransform(locations.intro);
+        gsap.set(".map-inner", {
+            scale: initialPos.scale,
+            xPercent: initialPos.xPercent,
+            yPercent: initialPos.yPercent
+        });
+
+        document.querySelectorAll('.route-path').forEach(path => {
+            const len = path.getTotalLength();
+            gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+        });
+
+        function createScene(targetId, locKey, pathId, flagId) {
+            const targetPos = calculateTransform(locations[locKey]);
+
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: targetId,
+                    start: "top bottom",
+                    end: "center center",
+                    scrub: 1,
+                }
+            });
+
+            tl.to(".map-inner", {
+                scale: targetPos.scale,
+                xPercent: targetPos.xPercent,
+                yPercent: targetPos.yPercent,
+                ease: "power1.inOut",
+                duration: 1
+            });
+
+            if (pathId) {
+                tl.to(pathId, {
+                    strokeDashoffset: 0,
+                    ease: "power1.out",
+                    duration: 0.6
+                }, "<");
+            }
+
+            ScrollTrigger.create({
+                trigger: targetId,
+                start: "center center",
+                end: "bottom center",
+                onEnter: () => {
+                    if (flagId) {
+                        const flagEl = document.querySelector(flagId);
+                        flagEl.innerText = flagEl.dataset.flag;
+                        gsap.to(flagId, { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.5)" });
+                    }
+                },
+                onLeave: () => {
+                    if (flagId) {
+                        const flagEl = document.querySelector(flagId);
+                        gsap.to(flagId, {
+                            scale: 0,
+                            duration: 0.1,
+                            onComplete: () => {
+                                flagEl.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/100px-Flag_of_Thailand.svg.png" style="width: 40px; height: auto; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">';
+                                gsap.to(flagId, { scale: 1, duration: 0.1 });
+                            }
+                        });
+                    }
+                },
+                onEnterBack: () => {
+                    if (flagId) {
+                        const flagEl = document.querySelector(flagId);
+                        gsap.to(flagId, {
+                            scale: 0, duration: 0.2,
+                            onComplete: () => {
+                                flagEl.innerText = flagEl.dataset.flag;
+                                gsap.to(flagId, { scale: 1, duration: 0.3 });
+                            }
+                        });
+                    }
+                },
+                onLeaveBack: () => {
+                    if (flagId) gsap.to(flagId, { scale: 0, duration: 0.3 });
+                }
+            });
+        }
+
+        createScene("#sec-jp", "jp", "#path-jp", "#flag-jp");
+        createScene("#sec-cn", "cn", "#path-cn", "#flag-cn");
+        createScene("#sec-au", "au", "#path-au", "#flag-au");
+        createScene("#sec-fr", "fr", "#path-fr", "#flag-fr");
+        createScene("#sec-us", "us", "#path-us", "#flag-us");
+
+        const overviewPos = calculateTransform(locations.overview);
+
+        gsap.to(".map-inner", {
+            scale: overviewPos.scale,
+            xPercent: overviewPos.xPercent,
+            yPercent: overviewPos.yPercent,
+            ease: "power1.inOut",
+            scrollTrigger: {
+                trigger: "#sec-outro",
+                start: "top 85%",
+                end: "center center",
+                scrub: 1.5
+            }
+        });
+
+        document.querySelectorAll('.content-card').forEach(card => {
+            gsap.to(card, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 45%",
+                    end: "bottom top",
+                    toggleActions: "play reverse play reverse"
+                }
+            });
+        });
+
+    </script>
 </body>
 
 </html>
